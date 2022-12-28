@@ -1,0 +1,39 @@
+
+
+<canvas id="clock" width="200" height="200"></canvas>
+
+<script>
+// ambil elemen canvas
+const canvas = document.getElementById('clock');
+const ctx = canvas.getContext('2d');
+
+// menentukan ukuran dan posisi jam
+const radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+
+// fungsi untuk menggambar jam
+function drawClock() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+}
+
+// fungsi untuk menggambar wajah jam
+function drawFace(ctx, radius) {
+  // ...
+}
+
+// fungsi untuk menggambar angka-angka pada jam
+function drawNumbers(ctx, radius) {
+  // ...
+}
+
+// fungsi untuk menggambar jarum jam
+function drawTime(ctx, radius) {
+  // ...
+}
+
+// panggil fungsi drawClock() setiap 1 detik
+setInterval(drawClock, 1000);
+</script>
