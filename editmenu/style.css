@@ -29,13 +29,11 @@ textarea {
   width: 100%;
   max-width: 1300px;
 
-  background-color: #fff;
+  background-color: #004d95;
   border-radius: 50px;
   box-shadow: 0 0 50px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
 }
 
 .contact-form {
@@ -103,7 +101,7 @@ form {
 }
 
 .form-input-container {
-  padding: 8rem 2.2rem;
+  padding: 25px 140px 150px 155px;
 }
 
 .input {

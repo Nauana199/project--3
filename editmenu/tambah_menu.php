@@ -96,28 +96,28 @@ function InsertData()
     <span class="big-circle"></span>
 
     <div class="form">
-      <div class="contact-info">
-        <!-- EDITOR PANEL -->
-        <div class="editor-panel">
-          <div class="filter">
-            <!-- <label class="title">Filter</label>
+      <!-- <div class="contact-info"> -->
+      <!-- EDITOR PANEL -->
+      <!-- <div class="editor-panel">
+          <div class="filter"> -->
+      <!-- <label class="title">Filter</label>
             <div class="options">
               <button id="brightness" class="active">Kecerahan</button>
               <button id="saturation">Kejenuhan</button>
               <button id="inversion">Negatif</button>
               <button id="grayscale">Hitam Putih</button>
             </div> -->
-            <div class="slider">
-              <!-- <div class="filter-info">
+      <!-- <div class="slider"> -->
+      <!-- <div class="filter-info">
                 <p class="name">Kecerahan</p>
                 <p class="value">100%</p>
               </div> -->
-              <input type="range" value="100" min="0" max="200" hidden />
+      <!-- <input type="range" value="100" min="0" max="200" hidden />
             </div>
           </div>
-        </div>
-        <!-- ROTASI -->
-        <!-- <div class="rotate">
+        </div> -->
+      <!-- ROTASI -->
+      <!-- <div class="rotate">
           <label class="title">Putar & Balik</label>
           <div class="options">
             <button id="left"><i class="fa-solid fa-rotate-left"></i></button>
@@ -132,7 +132,7 @@ function InsertData()
             </button>
           </div>
         </div> -->
-        <div>
+      <!-- <div>
           <div class="preview-img">
             <img src="pilihgambar.jpg" alt="preview-img" />
           </div>
@@ -147,7 +147,7 @@ function InsertData()
               <button class="save-img" hidden>Simpan Gambar</button>
             </div>
           </div>
-      </div>
+      </div> -->
       <!-- KOTAK SEBELAH KIRI -->
       <div class="contact-form">
 
