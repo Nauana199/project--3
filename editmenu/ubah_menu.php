@@ -144,9 +144,7 @@ function ifOptionSelected($data, $selectedData)
         <form action="ubah_menu.php?kode_menu=<?= $row['Kode_Menu'] ?>" method="POST" enctype="multipart/form-data">
           <h3 class="title">Atur Menu</h3>
           <div class="input-container">
-            <input type="text" name="kode_produk" class="input" value="<?= $row['Kode_Menu'] ?>" readonly />
-            <label for="">Kode Menu</label>
-            <span>Kode Menu</span>
+            <input type="text" name="kode_produk" class="input" value="<?= $row['Kode_Menu'] ?>" readonly hidden />
           </div>
           <div class="input-container">
             <input type="text" name="kode_toko" class="input" value="<?= $row['Kode_Toko'] ?>" />

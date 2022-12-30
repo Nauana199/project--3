@@ -6,6 +6,44 @@ if (isset($_POST['submit_insert'])) {
   InsertData();
 }
 
+function countGenerator($numb)
+{
+  $numb++;
+  if (strlen($numb) > 5) {
+    return $numb;
+  } else if (strlen($numb) > 4) {
+    $numb = "0" . $numb;
+    return $numb;
+  } else if (strlen($numb) > 3) {
+    $numb = "00" . $numb;
+    return $numb;
+  } else if (strlen($numb) > 2) {
+    $numb = "000" . $numb;
+    return $numb;
+  } else if (strlen($numb) > 1) {
+    $numb = "0000" . $numb;
+    return $numb;
+  } else if (strlen($numb) > 0) {
+    $numb = "00000" . $numb;
+    return $numb;
+  }
+}
+function idMenuGenerator()
+{
+  $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
+
+  $sql = "SELECT Kode_Menu FROM menu ORDER BY Kode_Menu DESC";
+  $result = mysqli_query($koneksi, $sql);
+  if ($row = $result->fetch_array()) {
+    $countIDs = substr($row['Kode_Menu'], 2);
+    $newIDs = "KM" . countGenerator($countIDs);
+    return $newIDs;
+  } else {
+    $newIDs = "KM000001";
+    return $newIDs;
+  }
+}
+
 
 function InsertData()
 {
@@ -121,9 +159,7 @@ function InsertData()
         <div class="form-input-container">
           <h3 class="title">Atur Menu</h3>
           <div class="input-container">
-            <input type="text" name="kode_produk" class="input" />
-            <label for="">Kode Menu</label>
-            <span>Kode Menu</span>
+            <input type="text" name="kode_produk" class="input" value="<?= idMenuGenerator() ?>" hidden />
           </div>
           <div class="input-container">
             <input type="text" name="kode_toko" class="input" />
