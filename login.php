@@ -2,7 +2,7 @@
 require('koneksi.php');
 session_start();
 
-if (isset ($_SESSION["login"])){
+if (isset($_SESSION["login"])) {
   header("Location: index.php");
   exit;
 }
@@ -10,11 +10,11 @@ if (isset($_POST['submit'])) {
   $username = $_POST['email'];
   $pass = $_POST['password'];
   $Email = $_POST['Email'];
-  echo $username . $pass . $Email ;
-  
-  
+  echo $username . $pass . $Email;
+
+
   if (!empty($username) && !empty($pass)) {
-    $query = "SELECT * FROM akun WHERE Username = '$username'";
+    $query = "SELECT * FROM store WHERE Kode_Toko = '$username'";
     $result = mysqli_query($koneksi, $query);
     $num = mysqli_num_rows($result);
 
@@ -43,7 +43,6 @@ if (isset($_POST['submit'])) {
     echo $error;
   }
   $_SESSION["login"] = true;
-  
 }
 ?>
 <!DOCTYPE html>
@@ -108,8 +107,8 @@ if (isset($_POST['submit'])) {
                 <!-- <h4><a rel="" style="text-align: center;">Selamat Datang di Ofee</a></h4> -->
                 <form id="stripe-login" method="POST" action="login.php">
                   <div class="field padding-bottom--24">
-                    <label for="Username">Username</label>
-                    <input type="text" name="email" placeholder="Masukkan Username">
+                    <label for="Username">ID</label>
+                    <input type="text" name="email" placeholder="Masukkan ID ">
                   </div>
                   <div class="field padding-bottom--24">
                     <div class="grid--50-50">

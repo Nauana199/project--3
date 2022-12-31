@@ -84,103 +84,55 @@ function ifOptionSelected($data, $selectedData)
 
     <div class="form">
       <div class="contact-info">
-        <!-- EDITOR PANEL -->
-        <div class="editor-panel">
-          <div class="filter">
-            <!-- <label class="title">Filter</label>
-            <div class="options">
-              <button id="brightness" class="active">Kecerahan</button>
-              <button id="saturation">Kejenuhan</button>
-              <button id="inversion">Negatif</button>
-              <button id="grayscale">Hitam Putih</button>
-            </div> -->
-            <div class="slider">
-              <!-- <div class="filter-info">
-                <p class="name">Kecerahan</p>
-                <p class="value">100%</p>
-              </div> -->
-              <input type="range" value="100" min="0" max="200" hidden />
+
+        <!-- KOTAK SEBELAH KIRI -->
+        <div class="contact-form">
+
+          <!-- HIASAN -->
+          <span class="circle one"></span>
+          <span class="circle two"></span>
+
+          <!-- FORM INPUT -->
+          <form action="ubah_menu.php?kode_menu=<?= $row['Kode_Menu'] ?>" method="POST" enctype="multipart/form-data">
+            <h3 class="title">Atur Menu</h3>
+            <div class="input-container">
+              <input type="text" name="kode_produk" class="input" value="<?= $row['Kode_Menu'] ?>" readonly hidden />
             </div>
-          </div>
-        </div>
-        <!-- ROTASI -->
-        <!-- <div class="rotate">
-          <label class="title">Putar & Balik</label>
-          <div class="options">
-            <button id="left"><i class="fa-solid fa-rotate-left"></i></button>
-            <button id="right">
-              <i class="fa-solid fa-rotate-right"></i>
-            </button>
-            <button id="horizontal">
-              <i class="bx bx-reflect-vertical"></i>
-            </button>
-            <button id="vertical">
-              <i class="bx bx-reflect-horizontal"></i>
-            </button>
-          </div>
-        </div> -->
-        <div>
-          <div class="preview-img">
-            <img src="pilihgambar.jpg" alt="preview-img" />
-          </div>
-        </div>
-        <div class="controls">
-          <button class="reset-filter" hidden>Atur Ulang</button>
-          <div class="row">
-            <input type="file" class="file-input" accept="image/*" hidden />
-            <button class="choose-img">Pilih Gambar</button>
-            <button class="save-img" hidden>Simpan Gambar</button>
-          </div>
-        </div>
-      </div>
-      <!-- KOTAK SEBELAH KIRI -->
-      <div class="contact-form">
+            <div class="input-container">
+              <input type="text" name="kode_toko" class="input" value="<?= $row['Kode_Toko'] ?>" />
+              <label for="">Kode Toko</label>
+              <span>Kode Toko</span>
+            </div>
+            <div class="input-container">
+              <input type="text" name="nama_produk" class="input" value="<?= $row['Nama_Menu'] ?>" />
+              <label for="">Nama Menu</label>
+              <span>Nama Menu</span>
+            </div>
+            <div class="input-container">
+              <input type="number" name="harga_produk" class="input" value="<?= $row['Harga'] ?>" />
+              <label for="">Harga</label>
+              <span>Harga</span>
+            </div>
+            <div class="input-container textarea">
+              <textarea name="deskripsi_produk" class="input"><?= $row['deskripsi'] ?></textarea>
+              <label for="">Deskripsi Produk</label>
+              <span>Deskripsi Produk</span>
+            </div>
+            <div class="input-container option">
+              <select class="input" style="color: black;" name="kategori_menu">
+                <option selected>Kategori</option>
+                <option value="MAKANAN" <?= ((ifOptionSelected("MAKANAN", $row['kategori_menu'])) ? 'selected = "selected"' : "") ?>> Makanan </option>
+                <option value="MINUMAN" <?= ((ifOptionSelected("MINUMAN", $row['kategori_menu'])) ? 'selected="selected"' : "") ?>> Minuman </option>
+                <option value="PAKET" <?= ((ifOptionSelected("PAKET", $row['kategori_menu'])) ? 'selected="selected"' : "") ?>> Paket </option>
+              </select>
+            </div>
+            <div class="input-container">
+              <input name="gambar_menu" class="input" type="file">
+            </div>
+            <!-- COBA -->
+            <div class="note">
 
-        <!-- HIASAN -->
-        <span class="circle one"></span>
-        <span class="circle two"></span>
-
-        <!-- FORM INPUT -->
-        <form action="ubah_menu.php?kode_menu=<?= $row['Kode_Menu'] ?>" method="POST" enctype="multipart/form-data">
-          <h3 class="title">Atur Menu</h3>
-          <div class="input-container">
-            <input type="text" name="kode_produk" class="input" value="<?= $row['Kode_Menu'] ?>" readonly hidden />
-          </div>
-          <div class="input-container">
-            <input type="text" name="kode_toko" class="input" value="<?= $row['Kode_Toko'] ?>" />
-            <label for="">Kode Toko</label>
-            <span>Kode Toko</span>
-          </div>
-          <div class="input-container">
-            <input type="text" name="nama_produk" class="input" value="<?= $row['Nama_Menu'] ?>" />
-            <label for="">Nama Menu</label>
-            <span>Nama Menu</span>
-          </div>
-          <div class="input-container">
-            <input type="number" name="harga_produk" class="input" value="<?= $row['Harga'] ?>" />
-            <label for="">Harga</label>
-            <span>Harga</span>
-          </div>
-          <div class="input-container textarea">
-            <textarea name="deskripsi_produk" class="input"><?= $row['deskripsi'] ?></textarea>
-            <label for="">Deskripsi Produk</label>
-            <span>Deskripsi Produk</span>
-          </div>
-          <div class="input-container option">
-            <select class="input" style="color: black;" name="kategori_menu">
-              <option selected>Kategori</option>
-              <option value="MAKANAN" <?= ((ifOptionSelected("MAKANAN", $row['kategori_menu'])) ? 'selected = "selected"' : "") ?>> Makanan </option>
-              <option value="MINUMAN" <?= ((ifOptionSelected("MINUMAN", $row['kategori_menu'])) ? 'selected="selected"' : "") ?>> Minuman </option>
-              <option value="PAKET" <?= ((ifOptionSelected("PAKET", $row['kategori_menu'])) ? 'selected="selected"' : "") ?>> Paket </option>
-            </select>
-          </div>
-          <div class="input-container">
-            <input name="gambar_menu" class="input" type="file">
-          </div>
-          <!-- COBA -->
-          <div class="note">
-
-            <!-- <div class="titlee">
+              <!-- <div class="titlee">
               <h3>Tambah Toping</h3>
               <div class="note-wrapper">
 
@@ -198,14 +150,14 @@ function ifOptionSelected($data, $selectedData)
                 Delete All
               </button>
             </div> -->
-            <!-- SUBMIT -->
-            <input type="submit" value="submit" class="btn" name="submit_edit" />
-        </form>
+              <!-- SUBMIT -->
+              <input type="submit" value="submit" class="btn" name="submit_edit" />
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="app.js"></script>
-  <script src="main.js"></script>
+    <script src="app.js"></script>
+    <script src="main.js"></script>
 
 </body>
 

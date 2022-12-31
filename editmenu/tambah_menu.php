@@ -1,6 +1,6 @@
 <?php
 
-require '../config/koneksi.php';
+require '../koneksi.php';
 
 if (isset($_POST['submit_insert'])) {
   InsertData();
@@ -70,7 +70,7 @@ function InsertData()
     mysqli_query($koneksi, $sql);
 
     move_uploaded_file($tmp_file, '../images/menu_images/' . $nama_file_baru);
-    header('Location: ../menu/index.php');
+    header('Location: ../menuu.php');
   }
 }
 ?>
@@ -137,7 +137,7 @@ function InsertData()
             <img src="pilihgambar.jpg" alt="preview-img" />
           </div>
         </div>
-        <form action="tambah_menu.php" method="POST" enctype="multipart/form-data">
+       
 
           <div class="controls">
             <button class="reset-filter" hidden>Atur Ulang</button>
@@ -149,53 +149,54 @@ function InsertData()
           </div>
       </div> -->
       <!-- KOTAK SEBELAH KIRI -->
-      <div class="contact-form">
+      <form action="tambah_menu.php" method="POST" enctype="multipart/form-data">
+        <div class="contact-form">
 
-        <!-- HIASAN -->
-        <span class="circle one"></span>
-        <span class="circle two"></span>
+          <!-- HIASAN -->
+          <span class="circle one"></span>
+          <span class="circle two"></span>
 
-        <!-- FORM INPUT -->
-        <div class="form-input-container">
-          <h3 class="title">Atur Menu</h3>
-          <div class="input-container">
-            <input type="text" name="kode_produk" class="input" value="<?= idMenuGenerator() ?>" hidden />
-          </div>
-          <div class="input-container">
-            <input type="text" name="kode_toko" class="input" />
-            <label for="">Kode Toko</label>
-            <span>Kode Toko</span>
-          </div>
-          <div class="input-container">
-            <input type="text" name="nama_produk" class="input" />
-            <label for="">Nama Produk</label>
-            <span>Nama Produk</span>
-          </div>
-          <div class="input-container">
-            <input type="number" name="harga_produk" class="input" />
-            <label for="">Harga</label>
-            <span>Harga</span>
-          </div>
-          <div class="input-container textarea">
-            <textarea name="deskripsi_produk" class="input"></textarea>
-            <label for="">Deskripsi Produk</label>
-            <span>Deskripsi Produk</span>
-          </div>
-          <div class="input-container">
-            <select class="input" style="color: white;" name="kategori_menu">
-              <option selected>Kategori</option>
-              <option value="MAKANAN" style="color: black;"> Makanan </option>
-              <option value="MINUMAN" style="color: black;"> Minuman </option>
-              <option value="PAKET" style="color: black;"> Paket Hemat </option>
-            </select>
-          </div>
-          <div class="input-container">
-            <input name="gambar_menu" class="input" type="file">
-          </div>
+          <!-- FORM INPUT -->
+          <div class="form-input-container">
+            <h3 class="title">Atur Menu</h3>
+            <div class="input-container">
+              <input type="text" name="kode_produk" class="input" value="<?= idMenuGenerator() ?>" hidden />
+            </div>
+            <div class="input-container">
+              <input type="text" name="kode_toko" class="input" />
+              <label for="">Kode Toko</label>
+              <span>Kode Toko</span>
+            </div>
+            <div class="input-container">
+              <input type="text" name="nama_produk" class="input" />
+              <label for="">Nama Produk</label>
+              <span>Nama Produk</span>
+            </div>
+            <div class="input-container">
+              <input type="number" name="harga_produk" class="input" />
+              <label for="">Harga</label>
+              <span>Harga</span>
+            </div>
+            <div class="input-container textarea">
+              <textarea name="deskripsi_produk" class="input"></textarea>
+              <label for="">Deskripsi Produk</label>
+              <span>Deskripsi Produk</span>
+            </div>
+            <div class="input-container">
+              <select class="input" style="color: white;" name="kategori_menu">
+                <option selected>Kategori</option>
+                <option value="MAKANAN" style="color: black;"> Makanan </option>
+                <option value="MINUMAN" style="color: black;"> Minuman </option>
+                <option value="PAKET" style="color: black;"> Paket Hemat </option>
+              </select>
+            </div>
+            <div class="input-container">
+              <input name="gambar_menu" class="input" type="file">
+            </div>
 
-          <div class="note">
+            <div class="note">
 
-            <!-- <div class="titlee">
+              <!-- <div class="titlee">
               <h3>Tambah Toping</h3>
               <div class="note-wrapper">
 
@@ -213,15 +214,15 @@ function InsertData()
                 Delete All
               </button>
             </div> -->
-            <!-- SUBMIT -->
-            <input type="submit" value="submit" class="btn" name="submit_insert" />
-            </form>
-          </div>
-        </div>
-      </div>
+              <!-- SUBMIT -->
+              <input type="submit" value="submit" class="btn" name="submit_insert" />
+      </form>
     </div>
-    <script src="app.js"></script>
-    <script src="main.js"></script>
+  </div>
+  </div>
+  </div>
+  <script src="app.js"></script>
+  <script src="main.js"></script>
 
 </body>
 
