@@ -87,14 +87,6 @@ form {
   margin-bottom: 0.7rem;
 }
 
-.titlee {
-  color: #fff;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 1;
-  margin-bottom: 0.7rem;
-}
-
 .input-container {
   position: relative;
   margin: 1rem 0;
@@ -213,11 +205,6 @@ textarea.input {
 .contact-info {
   padding: 10.3rem 3.1999999999999993rem;
   position: relative;
-}
-
-.contact-info .title {
-  color: #041777;
-  font-size: 16px;
 }
 
 .text {
@@ -646,12 +633,7 @@ body {
 .note-item p {
   padding-bottom: 0.8rem;
 }
-.note-item .btn {
-  margin-top: 0.8rem;
-  background: rgb(206, 9, 9);
-  border: 2px solid var(--bittersweet);
-  color: var(--bittersweet);
-}
+
 .note-input h3 {
   color: rgb(255, 255, 255) var(--bittersweet);
 }

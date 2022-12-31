@@ -80,7 +80,7 @@ function filterKategori($data)
           echo '
           <div class=" food-item ' . (filterKategori($row['kategori_menu'])) . '">
           <div class="food-img">
-            <img src="../images/menu_images/' . $row['gambar'] . '" alt="food image" />
+            <img src="images/menu_images/' . $row['gambar'] . '" alt="food image" />
           </div>
           <div class="food-content">
             <div class="description">

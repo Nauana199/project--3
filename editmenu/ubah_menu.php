@@ -1,6 +1,6 @@
 <?php
 
-require '../config/koneksi.php';
+require '../koneksi.php';
 
 $row = showData();
 if (isset($_POST['submit_edit'])) {
@@ -83,9 +83,9 @@ function ifOptionSelected($data, $selectedData)
     <span class="big-circle"></span>
 
     <div class="form">
-      <div class="contact-info">
 
-        <!-- KOTAK SEBELAH KIRI -->
+      <!-- KOTAK SEBELAH KIRI -->
+      <form action="ubah_menu.php" method="POST" enctype="multipart/form-data">
         <div class="contact-form">
 
           <!-- HIASAN -->
@@ -93,71 +93,52 @@ function ifOptionSelected($data, $selectedData)
           <span class="circle two"></span>
 
           <!-- FORM INPUT -->
-          <form action="ubah_menu.php?kode_menu=<?= $row['Kode_Menu'] ?>" method="POST" enctype="multipart/form-data">
+          <div class="form-input-container">
             <h3 class="title">Atur Menu</h3>
+
             <div class="input-container">
-              <input type="text" name="kode_produk" class="input" value="<?= $row['Kode_Menu'] ?>" readonly hidden />
-            </div>
-            <div class="input-container">
-              <input type="text" name="kode_toko" class="input" value="<?= $row['Kode_Toko'] ?>" />
+              <input type="text" name="kode_toko" class="input" />
               <label for="">Kode Toko</label>
               <span>Kode Toko</span>
             </div>
             <div class="input-container">
-              <input type="text" name="nama_produk" class="input" value="<?= $row['Nama_Menu'] ?>" />
-              <label for="">Nama Menu</label>
-              <span>Nama Menu</span>
+              <input type="text" name="nama_produk" class="input" />
+              <label for="">Nama Produk</label>
+              <span>Nama Produk</span>
             </div>
             <div class="input-container">
-              <input type="number" name="harga_produk" class="input" value="<?= $row['Harga'] ?>" />
+              <input type="number" name="harga_produk" class="input" />
               <label for="">Harga</label>
               <span>Harga</span>
             </div>
             <div class="input-container textarea">
-              <textarea name="deskripsi_produk" class="input"><?= $row['deskripsi'] ?></textarea>
+              <textarea name="deskripsi_produk" class="input"></textarea>
               <label for="">Deskripsi Produk</label>
               <span>Deskripsi Produk</span>
             </div>
-            <div class="input-container option">
-              <select class="input" style="color: black;" name="kategori_menu">
+            <div class="input-container">
+              <select class="input" style="color: white;" name="kategori_menu">
                 <option selected>Kategori</option>
-                <option value="MAKANAN" <?= ((ifOptionSelected("MAKANAN", $row['kategori_menu'])) ? 'selected = "selected"' : "") ?>> Makanan </option>
-                <option value="MINUMAN" <?= ((ifOptionSelected("MINUMAN", $row['kategori_menu'])) ? 'selected="selected"' : "") ?>> Minuman </option>
-                <option value="PAKET" <?= ((ifOptionSelected("PAKET", $row['kategori_menu'])) ? 'selected="selected"' : "") ?>> Paket </option>
+                <option value="MAKANAN" style="color: black;"> Makanan </option>
+                <option value="MINUMAN" style="color: black;"> Minuman </option>
+                <option value="PAKET" style="color: black;"> Paket Hemat </option>
               </select>
             </div>
             <div class="input-container">
               <input name="gambar_menu" class="input" type="file">
             </div>
-            <!-- COBA -->
-            <div class="note">
 
-              <!-- <div class="titlee">
-              <h3>Tambah Toping</h3>
-              <div class="note-wrapper">
 
-                <textarea name="message" class="input" type="text" id="note-title"></textarea>
-                <button type="button" class="btn" id="add-note-btn">
-                  <span><i class="fas fa-plus"></i></span>
-                  Add Note
-                </button>
-              </div>
-            </div>
 
-            <div class="note-list">
-              <button type="button" class="btn" id="delete-all-btn">
-                <span><i class="fas fa-trash"></i></span>
-                Delete All
-              </button>
-            </div> -->
-              <!-- SUBMIT -->
-              <input type="submit" value="submit" class="btn" name="submit_edit" />
-          </form>
-        </div>
-      </div>
+            <!-- SUBMIT -->
+            <input type="submit" value="submit" class="btn" name="submit_insert" />
+      </form>
     </div>
-    <script src="app.js"></script>
-    <script src="main.js"></script>
+  </div>
+  </div>
+  </div>
+  <script src="app.js"></script>
+  <script src="main.js"></script>
 
 </body>
 
