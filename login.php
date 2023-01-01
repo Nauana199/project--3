@@ -9,8 +9,7 @@ if (isset($_SESSION["login"])) {
 if (isset($_POST['submit'])) {
   $username = $_POST['email'];
   $pass = $_POST['password'];
-  $Email = $_POST['Email'];
-  echo $username . $pass . $Email;
+
 
 
   if (!empty($username) && !empty($pass)) {
@@ -19,7 +18,7 @@ if (isset($_POST['submit'])) {
     $num = mysqli_num_rows($result);
 
     while ($row = mysqli_fetch_array($result)) {
-      $userName = $row['Username'];
+      $userName = $row['Kode_Toko'];
       $passVal = $row['Password'];
 
       if ($num != 0) {

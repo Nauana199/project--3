@@ -16,7 +16,7 @@ function showData()
     $result = mysqli_query($koneksi, $sql);
     return mysqli_fetch_array($result);
   } else {
-    header('Location: ../menu/index.php');
+    header('Location: ../menuu.php');
   }
 }
 
@@ -45,12 +45,12 @@ function UpdateData()
       mysqli_query($koneksi, $sql);
 
       move_uploaded_file($tmp_file, '../images/menu_images/' . $nama_file_baru);
-      header('Location: ../menu/index.php');
+      header('Location:../menuu.php');
     }
   }
   $sql = "UPDATE menu SET Nama_Menu = '$namaProduk', Harga='$harga', Kode_Toko='$kodeToko', deskripsi = '$deskripsi', kategori_menu='$kategori_menu' WHERE kode_menu = '$kodeProduk'";
   mysqli_query($koneksi, $sql);
-  header('Location: ../menu/index.php');
+  header('Location: ../menuu.php');
 }
 
 function ifOptionSelected($data, $selectedData)
@@ -97,6 +97,7 @@ function ifOptionSelected($data, $selectedData)
             <h3 class="title">Atur Menu</h3>
 
             <div class="input-container">
+              <input type="text" name="kode_produk" class="input" value="<?= $_GET["kode_menu"] ?> " hidden />
               <input type="text" name="kode_toko" class="input" />
               <label for="">Kode Toko</label>
               <span>Kode Toko</span>
@@ -131,7 +132,7 @@ function ifOptionSelected($data, $selectedData)
 
 
             <!-- SUBMIT -->
-            <input type="submit" value="submit" class="btn" name="submit_insert" />
+            <input type="submit" value="submit" class="btn" name="submit_edit" />
       </form>
     </div>
   </div>
