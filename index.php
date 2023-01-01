@@ -1,10 +1,35 @@
 <?php
 require 'koneksi.php';
 session_start();
-if (!isset($_SESSION["login"])) {
+if (!isset ($_SESSION["login"])){
     header("Location: login.php");
     exit;
 }
+
+$koneksi = mysqli_connect('localhost', 'root', '', 'project3');
+$result = mysqli_query($koneksi , "SELECT * FROM transaksi");
+if(!$result){
+    echo mysqli_error($koneksi);
+}
+
+
+$get1 = mysqli_query($koneksi , "SELECT * FROM transaksi where status ='0'");// menghitung pesanan
+$count1 = mysqli_num_rows($get1);
+
+$notif = mysqli_query($koneksi , "SELECT * FROM transaksi where status ='0'"); //notifikasi pesanan
+
+
+$get2 = mysqli_query($koneksi , "SELECT * FROM transaksi where status ='1'");// menghitung pesanan progres
+$count2 = mysqli_num_rows($get2);
+
+$total = 0; 
+$total2 =0;
+$penghasilan = mysqli_query($koneksi , "SELECT (`Total_harga`) FROM transaksi where status ='1'");// menghitung penghasilan
+$penghasilan2 = mysqli_query($koneksi , "SELECT (`Total_harga`) FROM transaksi WHERE Tanggal_transaksi = CURDATE();"); // penghasilan hari ini
+
+//$proses = mysqli_query($koneksi , "UPDATE transaksi SET status = '1' WHERE Kode_Transaksi  ");
+// mysqli_query($koneksi, $sql);
+$row = mysqli_fetch_assoc($result); 
 
 ?>
 
@@ -51,6 +76,7 @@ if (!isset($_SESSION["login"])) {
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
@@ -63,7 +89,7 @@ if (!isset($_SESSION["login"])) {
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+            
             </div>
 
             <!-- Nav Item - Menuu Collapse Menu -->
@@ -72,13 +98,15 @@ if (!isset($_SESSION["login"])) {
                     <i class="text"></i>
                     <span>Menu</span></a>
 
-                <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    
                     <span>Utilities</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="utilities-color.html">Colors</a>
@@ -104,21 +132,15 @@ if (!isset($_SESSION["login"])) {
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
-
+                    
                     <span>Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.php">
-
-                    <span>Tabel Pembukuan Bulanan</span></a>
-            </li>
-            <!-- Nav Item Tabel Transaksi -->
-            <li class="nav-item active">
-                <a class="nav-link" href="transaksi.php">
-                    <i class="logo"></i>
-                    <span>Tabel Riwayat Transaksi</span></a>
+                    
+                    <span>Tables</span></a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -178,25 +200,27 @@ if (!isset($_SESSION["login"])) {
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span class="badge badge-danger badge-counter"><?= $count1; ?></span>
                             </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
+                                    Pesanan Baru !
+                                </h6><?php while ($tampil = mysqli_fetch_assoc($notif)):?>
+                                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#modal1">
+                                    <!-- <div class="mr-3"> -->
+                                        <!-- <div class="icon-circle bg-primary">
                                             <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
+                                        </div> -->
+                                    <!-- </div> -->
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    
+                                        <div value="save" type = "submit" class="font-weight-bold"><?php echo $tampil["Kode_Transaksi"];?></div>
+                                        <!-- <a class="font-weight-bold"></a> -->
+                                        <?php endwhile; ?>
                                     </div>
                                 </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-success">
                                             <i class="fas fa-donate text-white"></i>
@@ -217,8 +241,8 @@ if (!isset($_SESSION["login"])) {
                                         <div class="small text-gray-500">December 2, 2019</div>
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                </a> -->
+                                <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
                             </div>
                         </li>
 
@@ -236,7 +260,8 @@ if (!isset($_SESSION["login"])) {
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -247,7 +272,8 @@ if (!isset($_SESSION["login"])) {
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -258,7 +284,8 @@ if (!isset($_SESSION["login"])) {
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -269,7 +296,8 @@ if (!isset($_SESSION["login"])) {
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -290,6 +318,10 @@ if (!isset($_SESSION["login"])) {
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['username'] ?></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
+
+
+
+
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="Profile.php">
@@ -317,6 +349,7 @@ if (!isset($_SESSION["login"])) {
 
                 </nav>
                 <!-- End of Topbar -->
+                             
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -329,9 +362,10 @@ if (!isset($_SESSION["login"])) {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
+                                            <?php while ($coba= mysqli_fetch_array($penghasilan)){$total+=$coba['Total_harga'];}?>
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Pendapatan Bulanan </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.40,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?=$total?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -347,9 +381,10 @@ if (!isset($_SESSION["login"])) {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
+                                        <?php while ($coba2= mysqli_fetch_array($penghasilan2)){$total2+=$coba2['Total_harga'];}?>
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Pendapatan Harian</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp. 15,000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?=$total2?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -359,21 +394,24 @@ if (!isset($_SESSION["login"])) {
                             </div>
                         </div>
 
+                         
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pesanan Selesai
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pesanan dalam proses
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">27</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= $count1; ?></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -393,11 +431,11 @@ if (!isset($_SESSION["login"])) {
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pesanan Dalam Proses</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                                Pesanan SELESAI</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $count2?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            <i class="fas fa-check-square fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -413,7 +451,8 @@ if (!isset($_SESSION["login"])) {
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Pendapatan Keseluruhan</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -424,38 +463,39 @@ if (!isset($_SESSION["login"])) {
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Card Body -->
-                                <div class="card-body">
+                                <!-- <div class="card-body">
                                     <div class="chart-area">
                                         <canvas id="myAreaChart"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-6 mb-4"> -->
 
-
-
-
-                            <!-- Logout Modal-->
-                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Anda Yakin ingin Logout?</h5>
-                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">klik "Logout" jika anda ingin keluar dari halaman ini</div>
-                                        <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                            <a class="btn btn-primary" href="logout.php">Logout</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
+                            
+               
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
                             <!-- Bootstrap core JavaScript-->
                             <script src="vendor/jquery/jquery.min.js"></script>

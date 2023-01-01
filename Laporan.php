@@ -1,3 +1,23 @@
+<?php
+require 'koneksi.php';
+session_start();
+$koneksi = mysqli_connect('localhost', 'root', '', 'project3');
+
+$jumlahDataPerHalaman = 5;
+$hitung = mysqli_query($koneksi , "SELECT * FROM transaksi");
+$JumlahData =  mysqli_num_rows($hitung);
+$jumlahHalaman = ceil($JumlahData/ $jumlahDataPerHalaman);
+$halaman = (isset($_GET ["halaman"])) ? $_GET["halaman"] : 1;
+$awalData = ($jumlahDataPerHalaman * $halaman) - $jumlahDataPerHalaman;
+$result = mysqli_query($koneksi , "SELECT * FROM transaksi LIMIT $awalData , $jumlahDataPerHalaman");
+if(!$result){
+    echo mysqli_error($koneksi);
+}
+
+$total = 0; 
+$penghasilan = mysqli_query($koneksi , "SELECT (`Total_harga`) FROM transaksi where status ='1'");// menghitung penghasilan
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +29,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>OFEE ADMIN</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -31,20 +51,20 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class=""></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3"><OPTION></OPTION> <sup>OOFEE</sup></div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+            <li class="nav-item active">
+                <a class="nav-link" href="index.php">
+                    <i class="logo"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -56,27 +76,17 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
-            </li>
+            <!-- Nav Item - Menuu Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="menuu.php">
+                    <i class="text"></i>
+                    <span>Menu</span></a>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    
                     <span>Utilities</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
@@ -100,38 +110,20 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                    aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item active" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
+
+
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
+                    
                     <span>Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
+                <a class="nav-link" href="tables.php">
+                    
                     <span>Tables</span></a>
             </li>
 
@@ -142,6 +134,8 @@
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
+
+            
 
         </ul>
         <!-- End of Sidebar -->
@@ -313,16 +307,18 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['username']?></span>
                                 <img class="img-profile rounded-circle"
+                                
                                     src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="Profile.php">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
+                                    
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -333,7 +329,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -352,9 +348,61 @@
                     <h1 class="h3 mb-4 text-gray-800">LAPORAN PENJUALAN</h1>
 
                 </div>
+
+                <!--navigasi-->  
+<br><br>          
+<?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+    <a class = "btn btn-info;" href="?halaman=<?= $i; ?>" style = "font-wight : super-bold; color :black ;"><?= $i;  ?></a>
+
+    <?php endfor; ?>  
                 <!-- /.container-fluid -->
-                
-            <!-- End of Main Content -->
+                <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Kode Transaksi</th>
+      <th scope="col">Total harga</th>
+      <th scope="col">Tanggal Transaksi</th>
+      <th scope="col">Metode Pembayaran</th>
+      <th scope="col">Voucher</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <?php $i = 1 + $awalData; ?>
+  <?php while ($row = mysqli_fetch_assoc($result)):?>
+    <tr>
+      <th scope="row"><?= $i?></th>
+      <td><?php echo $row["Kode_Transaksi"];?></td>
+      <td>RP. <?php echo $row["Total_harga"];?></td>
+      <td><?php echo $row["Tanggal_transaksi"];?></td>
+      <td><?php echo $row["Kode_Pembayaran"];?></td>
+      <td><?php echo $row["Kode_voucher"];?></td>
+    </tr>
+    <?php $i ++; ?>
+    <?php endwhile; ?>
+</table>
+ 
+<br>
+<div style ="position : absolute; right : 0px; "class="col-xl-3 co6-md-1 mb-2">  
+<div class="card border">
+                                <div class="card-body">
+                                    
+                                        <div class="col mr-2">
+                                            <?php while ($coba= mysqli_fetch_array($penghasilan)){$total+=$coba['Total_harga'];}?>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-gray-800 ">
+                                                Pendapatan Bulanan </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?=$total?></div>
+                                        </div>
+                                        <div class="col-grey">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+  </div>
+                        
+
+<!-- End of Main Content -->
 
             <!-- Footer -->
             
