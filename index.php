@@ -1,35 +1,36 @@
 <?php
 require 'koneksi.php';
 session_start();
-if (!isset ($_SESSION["login"])){
+
+if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
 
 $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
-$result = mysqli_query($koneksi , "SELECT * FROM transaksi");
-if(!$result){
+$result = mysqli_query($koneksi, "SELECT * FROM transaksi");
+if (!$result) {
     echo mysqli_error($koneksi);
 }
 
 
-$get1 = mysqli_query($koneksi , "SELECT * FROM transaksi where status ='0'");// menghitung pesanan
+$get1 = mysqli_query($koneksi, "SELECT * FROM transaksi where status ='0'"); // menghitung pesanan
 $count1 = mysqli_num_rows($get1);
 
-$notif = mysqli_query($koneksi , "SELECT * FROM transaksi where status ='0'"); //notifikasi pesanan
+$notif = mysqli_query($koneksi, "SELECT * FROM transaksi where status ='0'"); //notifikasi pesanan
 
 
-$get2 = mysqli_query($koneksi , "SELECT * FROM transaksi where status ='1'");// menghitung pesanan progres
+$get2 = mysqli_query($koneksi, "SELECT * FROM transaksi where status ='1'"); // menghitung pesanan progres
 $count2 = mysqli_num_rows($get2);
 
-$total = 0; 
-$total2 =0;
-$penghasilan = mysqli_query($koneksi , "SELECT (`Total_harga`) FROM transaksi where status ='1'");// menghitung penghasilan
-$penghasilan2 = mysqli_query($koneksi , "SELECT (`Total_harga`) FROM transaksi WHERE Tanggal_transaksi = CURDATE();"); // penghasilan hari ini
+$total = 0;
+$total2 = 0;
+$penghasilan = mysqli_query($koneksi, "SELECT (`Total_harga`) FROM transaksi where status ='1'"); // menghitung penghasilan
+$penghasilan2 = mysqli_query($koneksi, "SELECT (`Total_harga`) FROM transaksi WHERE Tanggal_transaksi = CURDATE();"); // penghasilan hari ini
 
 //$proses = mysqli_query($koneksi , "UPDATE transaksi SET status = '1' WHERE Kode_Transaksi  ");
 // mysqli_query($koneksi, $sql);
-$row = mysqli_fetch_assoc($result); 
+$row = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -89,7 +90,7 @@ $row = mysqli_fetch_assoc($result);
 
             <!-- Heading -->
             <div class="sidebar-heading">
-            
+
             </div>
 
             <!-- Nav Item - Menuu Collapse Menu -->
@@ -98,50 +99,26 @@ $row = mysqli_fetch_assoc($result);
                     <i class="text"></i>
                     <span>Menu</span></a>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+
+
+                <!-- Nav Item - Pages Collapse Menu -->
+
+
+
+                <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    
-                    <span>Utilities</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
-            </li>
+                <a class="nav-link" href="Laporan.php">
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-
-
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    
-                    <span>Charts</span></a>
+                    <span>Laporan Transaksi</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="tables.php">
-                    
-                    <span>Tables</span></a>
+                <a class="nav-link" href="profile.php">
+
+                    <span>Profile</span></a>
             </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -206,21 +183,21 @@ $row = mysqli_fetch_assoc($result);
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Pesanan Baru !
-                                </h6><?php while ($tampil = mysqli_fetch_assoc($notif)):?>
-                                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#modal1">
-                                    <!-- <div class="mr-3"> -->
+                                </h6><?php while ($tampil = mysqli_fetch_assoc($notif)) : ?>
+                                    <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#modal1">
+                                        <!-- <div class="mr-3"> -->
                                         <!-- <div class="icon-circle bg-primary">
                                             <i class="fas fa-file-alt text-white"></i>
                                         </div> -->
-                                    <!-- </div> -->
-                                    <div>
-                                    
-                                        <div value="save" type = "submit" class="font-weight-bold"><?php echo $tampil["Kode_Transaksi"];?></div>
-                                        <!-- <a class="font-weight-bold"></a> -->
+                                        <!-- </div> -->
+                                        <div>
+
+                                            <div value="save" type="submit" class="font-weight-bold"><?php echo $tampil["Kode_Transaksi"]; ?></div>
+                                            <!-- <a class="font-weight-bold"></a> -->
                                         <?php endwhile; ?>
-                                    </div>
-                                </a>
-                                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
+                                        </div>
+                                    </a>
+                                    <!-- <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
                                         <div class="icon-circle bg-success">
                                             <i class="fas fa-donate text-white"></i>
@@ -242,7 +219,7 @@ $row = mysqli_fetch_assoc($result);
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div>
                                 </a> -->
-                                <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
+                                    <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
                             </div>
                         </li>
 
@@ -258,55 +235,9 @@ $row = mysqli_fetch_assoc($result);
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3"> -->
+
                             </div>
                         </li>
 
@@ -349,7 +280,7 @@ $row = mysqli_fetch_assoc($result);
 
                 </nav>
                 <!-- End of Topbar -->
-                             
+
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -362,10 +293,12 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <?php while ($coba= mysqli_fetch_array($penghasilan)){$total+=$coba['Total_harga'];}?>
+                                            <?php while ($coba = mysqli_fetch_array($penghasilan)) {
+                                                $total += $coba['Total_harga'];
+                                            } ?>
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Pendapatan Bulanan </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?=$total?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?= $total ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -381,10 +314,12 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                        <?php while ($coba2= mysqli_fetch_array($penghasilan2)){$total2+=$coba2['Total_harga'];}?>
+                                            <?php while ($coba2 = mysqli_fetch_array($penghasilan2)) {
+                                                $total2 += $coba2['Total_harga'];
+                                            } ?>
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Pendapatan Harian</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?=$total2?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">Rp.<?= $total2 ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -394,7 +329,7 @@ $row = mysqli_fetch_assoc($result);
                             </div>
                         </div>
 
-                         
+
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
@@ -409,9 +344,7 @@ $row = mysqli_fetch_assoc($result);
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                        <div class="progress-bar bg-info" role="progressbar" style="width: 76%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -432,7 +365,7 @@ $row = mysqli_fetch_assoc($result);
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pesanan SELESAI</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $count2?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $count2 ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-check-square fa-2x text-gray-300"></i>
@@ -451,16 +384,18 @@ $row = mysqli_fetch_assoc($result);
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
-                                <div
+                                <!-- <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Pendapatan Keseluruhan</h6>
                                     <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                         </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
                                             <a class="dropdown-item" href="Laporan.php">Laporan Transaksi</a>
-
+                                    
                                         </div>
                                     </div>
                                 </div> -->
@@ -474,45 +409,115 @@ $row = mysqli_fetch_assoc($result);
                         </div>
                         <div class="col-lg-6 mb-4"> -->
 
-                            
-                            
-               
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="logout.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-                            <!-- Bootstrap core JavaScript-->
-                            <script src="vendor/jquery/jquery.min.js"></script>
-                            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                            <!-- Core plugin JavaScript-->
-                            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                            <!-- Custom scripts for all pages-->
-                            <script src="js/sb-admin-2.min.js"></script>
+                                <!-- Logout Modal-->
+                                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                <a class="btn btn-primary" href="logout.php">Logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- The Modal -->
+                                <div class="modal fade" id="modal1" name="" value="save">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
 
-                            <!-- Page level plugins -->
-                            <script src="vendor/chart.js/Chart.min.js"></script>
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <?php ($tampil = mysqli_fetch_assoc($notif)); ?>
+                                                <h4 class="modal-title"><?php echo $tampil["Kode_Transaksi"]; ?></h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
 
-                            <!-- Page level custom scripts -->
-                            <script src="js/demo/chart-area-demo.js"></script>
-                            <script src="js/demo/chart-pie-demo.js"></script>
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                <div class="container">
+                                                    <h6>Item Details</h6>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <?php echo $tampil["Kode_Transaksi"]; ?>
+                                                        </div>
+                                                        <div class="col-xs-6" style="padding-top: 2vh;">
+                                                            <ul type="none">
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h6>Order Details</h6>
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            <ul type="none">
+                                                                <li class="left">Order number:</li>
+                                                                <li class="left">Date:</li>
+                                                                <li class="left">Price:</li>
+                                                                <li class="left">Shipping:</li>
+                                                                <li class="left">Total Price:</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <ul class="right" type="none">
+                                                                <li class="right"><?php echo $tampil["Kode_Transaksi"]; ?></li>
+                                                                <li class="right"><?php echo $tampil["Tanggal_transaksi"]; ?></li>
+                                                                <li class="right"><?php echo $tampil["Total_harga"]; ?></li>
+                                                                <li class="right"><?php echo $tampil["Kode_Pembayaran"]; ?></li>
+                                                                <li class="right"><?php echo $tampil["Total_harga"]; ?></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <h6>Shipment</h6>
+                                                    <div class="row" style="border-bottom: none">
+                                                        <div class="col-xs-6">
+                                                            <ul type="none">
+                                                                <li class="left">Estimated arrival</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            <ul type="none">
+                                                                <li class="right">25-03-2020</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal footer -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn">Proses</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bootstrap core JavaScript-->
+                                <script src="vendor/jquery/jquery.min.js"></script>
+                                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                                <!-- Core plugin JavaScript-->
+                                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                                <!-- Custom scripts for all pages-->
+                                <script src="js/sb-admin-2.min.js"></script>
+
+                                <!-- Page level plugins -->
+                                <script src="vendor/chart.js/Chart.min.js"></script>
+
+                                <!-- Page level custom scripts -->
+                                <script src="js/demo/chart-area-demo.js"></script>
+                                <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
