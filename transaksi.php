@@ -2,10 +2,10 @@
 require 'koneksi.php';
 session_start();
 
-if (!isset($_SESSION["login"])) {
-  header("Location: login.php");
-  exit;
-}
+// if (!isset($_SESSION["login"])) {
+//   header("Location: login.php");
+//   exit;
+// }
 ?>
 
 <!DOCTYPE html>
@@ -77,9 +77,13 @@ if (!isset($_SESSION["login"])) {
 
         <!-- Nav Item - Pages Collapse Menu -->
 
+      <li class="nav-item">
+        <a class="nav-link" href="transaksi.php">
 
+          <span>Riwayat Transaksi</span></a>
+      </li>
 
-        <!-- Nav Item - Charts -->
+      <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="Laporan.php">
 

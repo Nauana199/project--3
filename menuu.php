@@ -94,14 +94,19 @@ function filterKategori($data)
         <a class="nav-link" href="menuu.php">
           <i class="text"></i>
           <span>Menu</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="transaksi.php">
+          <i class="text"></i>
+          <span>Riwayat Transaksi</span></a>
+      </li>
+
+      <!-- Nav Item - Pages Collapse Menu -->
 
 
 
-        <!-- Nav Item - Pages Collapse Menu -->
-
-
-
-        <!-- Nav Item - Charts -->
+      <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="Laporan.php">
 
@@ -354,7 +359,7 @@ function filterKategori($data)
                 $result = mysqli_query($koneksi, $query);
                 while ($row = mysqli_fetch_array($result)) {
                   echo '
-                                        <div class=" food-item ' . (filterKategori($row['kategori_menu'])) . '">
+                                        <div class=" food-item ' . (filterKategori($row['katagori_menu'])) . '">
                                         <div class="food-img">
                                             <img src="images/menu_images/' . $row['gambar'] . '" alt="food image" />
                                         </div>

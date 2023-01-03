@@ -82,7 +82,12 @@ $penghasilan = mysqli_query($koneksi, "SELECT (`Total_harga`) FROM transaksi whe
                     <i class="text"></i>
                     <span>Menu</span></a>
 
-                <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="transaksi.php">
+
+                    <span>Riwayat Transaksi</span></a>
+            </li>
+            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
 

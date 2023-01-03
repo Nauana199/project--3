@@ -41,14 +41,14 @@ function UpdateData()
 
     if ($ext_file == "jpg" || $ext_file == "jpeg" || $ext_file == "png") {
 
-      $sql = "UPDATE menu SET Nama_Menu = '$namaProduk', Harga='$harga', Kode_Toko='$kodeToko', deskripsi = '$deskripsi', gambar = '$nama_file_baru' WHERE kode_menu = '$kodeProduk'";
+      $sql = "UPDATE menu SET Nama_Menu = '$namaProduk', Harga='$harga', Kode_Toko='$kodeToko', deskripsi = '$deskripsi', katagori_menu='$kategori_menu', gambar = '$nama_file_baru' WHERE kode_menu = '$kodeProduk'";
       mysqli_query($koneksi, $sql);
 
       move_uploaded_file($tmp_file, 'images/menu_images/' . $nama_file_baru);
       header('Location: menuu.php');
     }
   }
-  $sql = "UPDATE menu SET Nama_Menu = '$namaProduk', Harga='$harga', Kode_Toko='$kodeToko', deskripsi = '$deskripsi', kategori_menu='$kategori_menu' WHERE kode_menu = '$kodeProduk'";
+  $sql = "UPDATE menu SET Nama_Menu = '$namaProduk', Harga='$harga', Kode_Toko='$kodeToko', deskripsi = '$deskripsi', katagori_menu='$kategori_menu' WHERE kode_menu = '$kodeProduk'";
   mysqli_query($koneksi, $sql);
   header('Location: menuu.php');
 }
@@ -139,9 +139,13 @@ function ifOptionSelected($data, $selectedData)
 
         <!-- Nav Item - Pages Collapse Menu -->
 
+      <li class="nav-item">
+        <a class="nav-link" href="transaksi.php">
 
+          <span>Riwayat Transaksi</span></a>
+      </li>
 
-        <!-- Nav Item - Charts -->
+      <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="Laporan.php">
 
@@ -399,9 +403,9 @@ function ifOptionSelected($data, $selectedData)
                     <div class="input-container">
                       <select class="input" style="color: white;" name="kategori_menu">
                         <option selected>Kategori</option>
-                        <option value="MAKANAN" style="color: black;" <?= ((ifOptionSelected('MAKANAN', $row['kategori_menu']) ? 'selected="selected"' : "")) ?>> Makanan </option>
-                        <option value="MINUMAN" style="color: black;" <?= ((ifOptionSelected('MINUMAN', $row['kategori_menu']) ? 'selected="selected"' : "")) ?>> Minuman </option>
-                        <option value="PAKET" style="color: black;" <?= ((ifOptionSelected('PAKET', $row['kategori_menu']) ? 'selected="selected"' : "")) ?>> Paket Hemat </option>
+                        <option value="MAKANAN" style="color: black;" <?= ((ifOptionSelected('MAKANAN', $row['katagori_menu']) ? 'selected="selected"' : "")) ?>> Makanan </option>
+                        <option value="MINUMAN" style="color: black;" <?= ((ifOptionSelected('MINUMAN', $row['katagori_menu']) ? 'selected="selected"' : "")) ?>> Minuman </option>
+                        <option value="PAKET" style="color: black;" <?= ((ifOptionSelected('PAKET', $row['katagori_menu']) ? 'selected="selected"' : "")) ?>> Paket Hemat </option>
                       </select>
                     </div>
                     <div class="input-container">

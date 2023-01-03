@@ -66,7 +66,7 @@ function InsertData()
 
   if ($ext_file == "jpg" || $ext_file == "jpeg" || $ext_file == "png") {
 
-    $sql = "INSERT INTO menu (Kode_Menu, Nama_Menu, Harga, Kode_Toko, deskripsi, kategori_menu, gambar) 
+    $sql = "INSERT INTO menu (Kode_Menu, Nama_Menu, Harga, Kode_Toko, deskripsi, katagori_menu, gambar) 
     VALUES ('$kodeProduk', '$namaProduk','$harga', '$kodeToko', '$deskripsi', '$kategoriMenu', '$nama_file_baru')";
     mysqli_query($koneksi, $sql);
 
@@ -152,14 +152,18 @@ function InsertData()
 
 
         <!-- Nav Item - Pages Collapse Menu -->
-
-
-
-        <!-- Nav Item - Charts -->
       <li class="nav-item">
         <a class="nav-link" href="Laporan.php">
 
           <span>Laporan Transaksi</span></a>
+      </li>
+
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="transaksi.php">
+
+          <span>Riwayat Transaksi</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
