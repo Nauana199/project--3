@@ -11,7 +11,7 @@ $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
 $result = mysqli_query($koneksi, "SELECT * FROM transaksi");
 if (!$result) {
     echo mysqli_error($koneksi);
-},
+}
 
 
 $get1 = mysqli_query($koneksi, "SELECT * FROM transaksi where status ='0'"); // menghitung pesanan
