@@ -213,6 +213,7 @@ function InsertData()
                 </form>
                 <!-- DataTales Example -->
             </div>
+            
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto"></div>

@@ -211,6 +211,33 @@ function InsertData()
 
                     <button type="submit" name="submit_insert">Submit</button>
                 </form>
+                <!-- =========================================== -->
+
+                <form class="mt-8 space-y-3" action="#" method="POST">
+
+                    <div class="question">
+                        <input type="text" name="nama_toko" required="">
+                        <label>Nama Banner</label>
+                    </div>
+                    <div class="question">
+                        <input type="text" name="nama_toko" required="">
+                        <label>ID</label>
+                    </div>
+                    <div class="question">
+                        <input type="file" name="gambar" required="">
+                    </div>
+                    <div class="wrapper">
+                        <button class="">
+                            <span>Submit</span>
+
+                        </button>
+                        <button class="">
+                            <span>Delete</span>
+
+                        </button>
+                    </div>
+                </form>
+
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
