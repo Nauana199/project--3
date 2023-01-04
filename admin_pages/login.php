@@ -1,5 +1,5 @@
 <?php
-require('koneksi.php');
+require('../koneksi.php');
 session_start();
 
 if (isset($_SESSION["login"])) {
@@ -8,17 +8,17 @@ if (isset($_SESSION["login"])) {
 }
 if (isset($_POST['submit'])) {
   $username = $_POST['email'];
-  $pass = $_POST['password'];
+  $pass = md5($_POST['password']);
 
 
 
   if (!empty($username) && !empty($pass)) {
-    $query = "SELECT * FROM store WHERE Kode_Toko = '$username'";
+    $query = "SELECT * FROM Akun WHERE Username = '$username'";
     $result = mysqli_query($koneksi, $query);
     $num = mysqli_num_rows($result);
 
     while ($row = mysqli_fetch_array($result)) {
-      $userName = $row['Kode_Toko'];
+      $userName = $row['Username'];
       $passVal = $row['Password'];
 
       if ($num != 0) {
@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../style.css" />
   <title>Sign in & Sign up Form</title>
 </head>
 
@@ -100,14 +100,14 @@ if (isset($_POST['submit'])) {
             <div class="formbg">
               <div class="formbg-inner padding-horizontal--48">
                 <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
-                  <img src="logo.png" style="width: 150px;">
+                  <img src="../logo.png" style="width: 150px;">
 
                 </div>
                 <!-- <h4><a rel="" style="text-align: center;">Selamat Datang di Ofee</a></h4> -->
                 <form id="stripe-login" method="POST" action="login.php">
                   <div class="field padding-bottom--24">
-                    <label for="Username">ID</label>
-                    <input type="text" name="email" placeholder="Masukkan ID ">
+                    <label for="Username">Admin Username</label>
+                    <input type="text" name="email" placeholder="Masukkan Username ">
                   </div>
                   <div class="field padding-bottom--24">
                     <div class="grid--50-50">
