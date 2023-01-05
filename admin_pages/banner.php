@@ -7,16 +7,7 @@ if (isset($_POST['submit_insert'])) {
 function countGenerator($numb)
 {
     $numb++;
-    if (strlen($numb) > 6) {
-        return $numb;
-    } else if (strlen($numb) > 5) {
-        $numb = "0" . $numb;
-        return $numb;
-    } else if (strlen($numb) > 4) {
-        $numb = "00" . $numb;
-        return $numb;
-    } else if (strlen($numb) > 3) {
-        $numb = "000" . $numb;
+    if (strlen($numb) > 3) {
         return $numb;
     } else if (strlen($numb) > 2) {
         $numb = "0000" . $numb;
@@ -33,14 +24,14 @@ function idTokoGenerator()
 {
     $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
 
-    $sql = "SELECT Kode_Toko FROM store ORDER BY Kode_Toko DESC";
+    $sql = "SELECT Kode_Banner FROM store ORDER BY Kode_Banner DESC";
     $result = mysqli_query($koneksi, $sql);
     if ($row = $result->fetch_array()) {
-        $countIDs = substr($row['Kode_Toko'], 1);
+        $countIDs = substr($row['Kode_Banner'], 1);
         $newIDs = "A" . countGenerator($countIDs);
         return $newIDs;
     } else {
-        $newIDs = "A0000001";
+        $newIDs = "A01";
         return $newIDs;
     }
 }
@@ -48,28 +39,27 @@ function idTokoGenerator()
 function InsertData()
 {
     $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
-    $kodeToko = $_POST['kode_toko'];
-    $alamat = $_POST['alamat'];
-    $latitude = $_POST['latitude'];
-    $longitude = $_POST['longitude'];
-    $distance = $_POST['distance'];
-    $namaToko = $_POST['nama_toko'];
+    $kodeBanner = $_POST['Kode_Banner'];
+
+    $namaBanner = $_POST['Nama_Banner'];
+    $gambar = $_POST['Gambar'];
+
 
     $ext_file = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
-    $nama_file_baru = 'image_toko_' . $kodeToko . '.' . $ext_file;
+    $nama_file_baru = 'image_banner_' . $kodeBanner . '.' . $ext_file;
 
-    if (is_file('../img/toko_image/' . $nama_file_baru)) unlink('../img/toko_image/' . $nama_file_baru);
+    if (is_file('../img/banner_image/' . $nama_file_baru)) unlink('../img/banner_image/' . $nama_file_baru);
 
     $tmp_file = $_FILES['gambar']['tmp_name'];
 
     if ($ext_file == "jpg" || $ext_file == "jpeg" || $ext_file == "png") {
 
-        $sql = "INSERT INTO menu (Kode_Toko, Alamat, latitude, longtitude, distance, Nama_Toko, like_count, Produk_Terjual, gambar_toko) 
-    VALUES ('$kodeToko', '$alamat','$latitude', '$longitude', '$distance', '$namaToko', '0', '0', '$nama_file_baru')";
+        $sql = "INSERT INTO menu (Kode_Banner, Nama_Banner, Gambar) 
+    VALUES ('$kodeBanner', '$namaBanner','$gambar')";
         // echo $sql;
         mysqli_query($koneksi, $sql);
 
-        move_uploaded_file($tmp_file, '../img/toko_image/' . $nama_file_baru);
+        move_uploaded_file($tmp_file, '../img/banner_image/' . $nama_file_baru);
     }
 }
 
@@ -182,38 +172,138 @@ function InsertData()
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <form action="index.php" method="post" enctype="multipart/form-data">
-                    <h1>Tambah Toko</h1>
-                    <input type="text" name="kode_toko" value="<?= idTokoGenerator() ?>" hidden />
-                    <div class="question">
-                        <input type="text" name="nama_toko" required />
-                        <label>Nama Toko</label>
-                    </div>
-                    <div class="question">
-                        <input type="text" name="alamat" required />
-                        <label>Alamat</label>
-                    </div>
-                    <div class="question">
-                        <input type="text" name="latitude" required />
-                        <label>Latitude</label>
-                    </div>
-                    <div class="question">
-                        <input type="text" name="longitude" required />
-                        <label>Longtitude</label>
-                    </div>
-                    <div class="question">
-                        <input type="text" name="distance" required />
-                        <label>Distance</label>
-                    </div>
 
                     <div class="question">
-                        <input type="file" name="gambar" required />
+                        <input type="text" name="nama_toko" required="">
+                        <label>Nama Banner</label>
                     </div>
+                    <div class="question">
+                        <input type="text" name="nama_toko" required="">
+                        <label>ID</label>
+                    </div>
+                    <div class="question">
+                        <input type="file" name="gambar" required="">
+                    </div>
+                    <div class="wrapper">
+                        <button class="">
+                            <span>Submit</span>
 
-                    <button type="submit" name="submit_insert">Submit</button>
+                        </button>
+
+                    </div>
                 </form>
+                <!-- =========================================== -->
+
+
                 <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Tabel Banner</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="dataTable_length">
+                                            <label>Tampilkan
+                                                <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="10">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div id="dataTable_filter" class="dataTables_filter">
+                                            <label>Cari:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" /></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 68.6719px">
+                                                        Kode_Banner
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 88.9062px">
+                                                        Nama_Banner
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 56.25px">
+                                                        Gambar
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th rowspan="1" colspan="1">Kode_Banner</th>
+                                                    <th rowspan="1" colspan="1">Nama_Banner</th>
+
+                                                    <th rowspan="1" colspan="1">Gambar</th>
+
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <?php
+                                                $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
+
+                                                $sql = "SELECT * FROM banner";
+                                                $result = mysqli_query($koneksi, $sql);
+
+                                                while ($row = mysqli_fetch_array($result)) {
+                                                    echo '
+                            <tr>
+                              <td>' . $row['Kode_Banner'] . '</td>
+                              <td>' . $row['Nama_Banner'] . '</td>
+                              <td>' . $row['Gambar'] . '</td>
+                          
+                            </tr>
+                            ';
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+                                            Showing 1 to 10 of 57 entries
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                            <ul class="pagination">
+                                                <li class="paginate_button page-item previous disabled" id="dataTable_previous">
+                                                    <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                                                </li>
+                                                <li class="paginate_button page-item active">
+                                                    <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                                                </li>
+                                                <li class="paginate_button page-item">
+                                                    <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                                                </li>
+                                                <li class="paginate_button page-item">
+                                                    <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                                                </li>
+
+                                                <li class="paginate_button page-item next" id="dataTable_next">
+                                                    <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto"></div>
