@@ -94,6 +94,8 @@ function InsertData()
     <!-- Custom styles for this template-->
     <link href="css/input.css" rel="stylesheet" />
     <link href="../css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../vendor/datatables/dataTables.bootstrap4.min.css">
+
     <style>
         .bg-gradient-primary {
             background-color: #2ae19f;
@@ -224,86 +226,30 @@ function InsertData()
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="dataTables_length" id="dataTable_length">
-                                            <label>Tampilkan
-                                                <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-                                                    <option value="10">10</option>
-                                                    <option value="25">25</option>
-                                                    <option value="50">50</option>
-                                                    <option value="100">100</option>
-                                                </select>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <div id="dataTable_filter" class="dataTables_filter">
-                                            <label>Cari:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" /></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="sorting sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 68.6719px">
-                                                        Kode Toko
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 88.9062px">
-                                                        Nama Toko
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 56.25px">
-                                                        Alamat
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px">
-                                                        Latitude
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 72.1406px">
-                                                        Longitude
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
-                                                        Distance
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
-                                                        Total Like
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
-                                                        Status Like
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
-                                                        Total Produk Terjual
-                                                    </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
-                                                        Password
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th rowspan="1" colspan="1">Kode Toko</th>
-                                                    <th rowspan="1" colspan="1">Nama Toko</th>
-                                                    <th rowspan="1" colspan="1">Alamat</th>
-                                                    <th rowspan="1" colspan="1">Latitude</th>
-                                                    <th rowspan="1" colspan="1">Longitude</th>
-                                                    <th rowspan="1" colspan="1">Distance</th>
-                                                    <th rowspan="1" colspan="1">Total Like</th>
-                                                    <th rowspan="1" colspan="1">Status LIke</th>
-                                                    <th rowspan="1" colspan="1">Total Produk Terjual</th>
-                                                    <th rowspan="1" colspan="1">Password</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <?php
-                                                $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" role="grid" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th>Kode Toko</th>
+                                        <th>Nama Toko</th>
+                                        <th>Alamat</th>
+                                        <th>Latitude</th>
+                                        <th>Longitude</th>
+                                        <th>Distance</th>
+                                        <th>Total Like</th>
+                                        <th>Status LIke</th>
+                                        <th>Total Produk Terjual</th>
+                                        <th>Password</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
 
-                                                $sql = "SELECT * FROM store";
-                                                $result = mysqli_query($koneksi, $sql);
+                                    $sql = "SELECT * FROM store";
+                                    $result = mysqli_query($koneksi, $sql);
 
-                                                while ($row = mysqli_fetch_array($result)) {
-                                                    echo '
+                                    while ($row = mysqli_fetch_array($result)) {
+                                        echo '
                                                         <tr>
                                                         <td>' . $row['Kode_Toko'] . '</td>
                                                         <td>' . $row['Nama_toko'] . '</td>
@@ -317,62 +263,23 @@ function InsertData()
                                                         <td>' . $row['Password'] . '</td>
                                                         </tr>
                                                         ';
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                                            Showing 1 to 10 of 57 entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                            <ul class="pagination">
-                                                <li class="paginate_button page-item previous disabled" id="dataTable_previous">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-                                                </li>
-                                                <li class="paginate_button page-item active">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-                                                </li>
-                                                <li class="paginate_button page-item">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a>
-                                                </li>
-                                                <li class="paginate_button page-item">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a>
-                                                </li>
-                                                <li class="paginate_button page-item">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">4</a>
-                                                </li>
-                                                <li class="paginate_button page-item">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="5" tabindex="0" class="page-link">5</a>
-                                                </li>
-                                                <li class="paginate_button page-item">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="6" tabindex="0" class="page-link">6</a>
-                                                </li>
-                                                <li class="paginate_button page-item next" id="dataTable_next">
-                                                    <a href="#" aria-controls="dataTable" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto"></div>
-            </footer>
-            <!-- End of Footer -->
         </div>
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto"></div>
+        </footer>
+        <!-- End of Footer -->
+    </div>
 
-        <!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
 
@@ -414,12 +321,17 @@ function InsertData()
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
-
     <!-- Page level custom scripts -->
-    <script src="../js/demo/chart-area-demo.js"></script>
-    <script src="../js/demo/chart-pie-demo.js"></script>
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var table = $('#dataTable').DataTable();
+
+        $(document).ready(function() {
+            table.draw();
+        });
+    </script>
 </body>
 
 </html>
