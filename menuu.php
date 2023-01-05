@@ -355,7 +355,7 @@ function filterKategori($data)
                 <!-- MAKANAN -->
                 <?php
 
-                $query = "SELECT * FROM menu";
+                $query = "SELECT * FROM menu WHERE Kode_Toko = '" . $_SESSION['username'] . "'";
                 $result = mysqli_query($koneksi, $query);
                 while ($row = mysqli_fetch_array($result)) {
                   echo '

@@ -7,24 +7,19 @@ if (isset($_POST['submit_insert'])) {
 function countGenerator($numb)
 {
     $numb++;
-    if (strlen($numb) > 3) {
-        return $numb;
-    } else if (strlen($numb) > 2) {
-        $numb = "0000" . $numb;
-        return $numb;
-    } else if (strlen($numb) > 1) {
-        $numb = "00000" . $numb;
+    if (strlen($numb) > 1) {
+
         return $numb;
     } else if (strlen($numb) > 0) {
-        $numb = "000000" . $numb;
+        $numb = "0" . $numb;
         return $numb;
     }
 }
-function idTokoGenerator()
+function idBannerGenerator()
 {
     $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
 
-    $sql = "SELECT Kode_Banner FROM store ORDER BY Kode_Banner DESC";
+    $sql = "SELECT Kode_Banner FROM banner ORDER BY Kode_Banner DESC";
     $result = mysqli_query($koneksi, $sql);
     if ($row = $result->fetch_array()) {
         $countIDs = substr($row['Kode_Banner'], 1);
@@ -39,12 +34,8 @@ function idTokoGenerator()
 function InsertData()
 {
     $koneksi = mysqli_connect('localhost', 'root', '', 'project3');
-    $kodeBanner = $_POST['Kode_Banner'];
-
-    $namaBanner = $_POST['Nama_Banner'];
-    $gambar = $_POST['Gambar'];
-
-
+    $kodeBanner = $_POST['kode_banner'];
+    $namaBanner = $_POST['nama_banner'];
     $ext_file = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
     $nama_file_baru = 'image_banner_' . $kodeBanner . '.' . $ext_file;
 
@@ -54,9 +45,8 @@ function InsertData()
 
     if ($ext_file == "jpg" || $ext_file == "jpeg" || $ext_file == "png") {
 
-        $sql = "INSERT INTO menu (Kode_Banner, Nama_Banner, Gambar) 
-    VALUES ('$kodeBanner', '$namaBanner','$gambar')";
-        // echo $sql;
+        $sql = "INSERT INTO banner (Kode_Banner, Nama_Banner, Gambar) 
+    VALUES ('$kodeBanner', '$namaBanner','$nama_file_baru')";
         mysqli_query($koneksi, $sql);
 
         move_uploaded_file($tmp_file, '../img/banner_image/' . $nama_file_baru);
@@ -107,13 +97,13 @@ function InsertData()
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+
+                    <span>Tambah Toko</span></a>
             </li>
 
             <li class="nav-item active">
                 <a class="nav-link" href="banner.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+
                     <span>Banner</span></a>
             </li>
             <!-- Divider -->
@@ -171,21 +161,18 @@ function InsertData()
             <!-- End of Main Content -->
             <div class="container-fluid">
                 <!-- Page Heading -->
-                <form action="index.php" method="post" enctype="multipart/form-data">
+                <form action="banner.php" method="post" enctype="multipart/form-data">
 
+                    <input type="text" name="kode_banner" required="" value="<?= idBannerGenerator() ?> " hidden>
                     <div class="question">
-                        <input type="text" name="nama_toko" required="">
+                        <input type="text" name="nama_banner" required="">
                         <label>Nama Banner</label>
-                    </div>
-                    <div class="question">
-                        <input type="text" name="nama_toko" required="">
-                        <label>ID</label>
                     </div>
                     <div class="question">
                         <input type="file" name="gambar" required="">
                     </div>
                     <div class="wrapper">
-                        <button class="">
+                        <button class="" type="submit" name="submit_insert">
                             <span>Submit</span>
 
                         </button>

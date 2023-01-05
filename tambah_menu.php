@@ -53,7 +53,7 @@ function InsertData()
   $kodeProduk = $_POST['kode_produk'];
   $namaProduk = $_POST['nama_produk'];
   $harga = $_POST['harga_produk'];
-  $kodeToko = $_POST['kode_toko'];
+  $kodeToko = $_SESSION['username'];
   $deskripsi = $_POST['deskripsi_produk'];
   $kategoriMenu = $_POST['kategori_menu'];
 
@@ -393,11 +393,6 @@ function InsertData()
                     <h3 class="title">Atur Menu</h3>
                     <div class="input-container">
                       <input type="text" name="kode_produk" class="input" value="<?= idMenuGenerator() ?>" hidden />
-                    </div>
-                    <div class="input-container">
-                      <input type="text" name="kode_toko" class="input" />
-                      <label for="">Kode Toko</label>
-                      <span>Kode Toko</span>
                     </div>
                     <div class="input-container">
                       <input type="text" name="nama_produk" class="input" />

@@ -54,6 +54,7 @@ function InsertData()
     $longitude = $_POST['longitude'];
     $distance = $_POST['distance'];
     $namaToko = $_POST['nama_toko'];
+    $password = $_POST['password'];
 
     $ext_file = pathinfo($_FILES['gambar']['name'], PATHINFO_EXTENSION);
     $nama_file_baru = 'image_toko_' . $kodeToko . '.' . $ext_file;
@@ -64,8 +65,8 @@ function InsertData()
 
     if ($ext_file == "jpg" || $ext_file == "jpeg" || $ext_file == "png") {
 
-        $sql = "INSERT INTO menu (Kode_Toko, Alamat, latitude, longtitude, distance, Nama_Toko, like_count, Produk_Terjual, gambar_toko) 
-    VALUES ('$kodeToko', '$alamat','$latitude', '$longitude', '$distance', '$namaToko', '0', '0', '$nama_file_baru')";
+        $sql = "INSERT INTO store (Kode_Toko, Alamat, latitude, longtitude, distance, Nama_Toko, like_count, Produk_Terjual, Password, gambar_toko) 
+    VALUES ('$kodeToko', '$alamat','$latitude', '$longitude', '$distance', '$namaToko', '0', '0', '$password', '$nama_file_baru')";
         // echo $sql;
         mysqli_query($koneksi, $sql);
 
@@ -117,13 +118,13 @@ function InsertData()
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+
+                    <span>Tambah Toko</span></a>
             </li>
 
             <li class="nav-item active">
                 <a class="nav-link" href="banner.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+
                     <span>Banner</span></a>
             </li>
             <!-- Divider -->
@@ -204,6 +205,10 @@ function InsertData()
                         <input type="text" name="distance" required />
                         <label>Distance</label>
                     </div>
+                    <div class="question">
+                        <input type="text" name="password" required />
+                        <label>Password</label>
+                    </div>
 
                     <div class="question">
                         <input type="file" name="gambar" required />
@@ -273,6 +278,9 @@ function InsertData()
                                                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
                                                         Total Produk Terjual
                                                     </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Salary: activate to sort column ascending" style="width: 70.0312px">
+                                                        Password
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
@@ -286,6 +294,7 @@ function InsertData()
                                                     <th rowspan="1" colspan="1">Total Like</th>
                                                     <th rowspan="1" colspan="1">Status LIke</th>
                                                     <th rowspan="1" colspan="1">Total Produk Terjual</th>
+                                                    <th rowspan="1" colspan="1">Password</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -297,18 +306,19 @@ function InsertData()
 
                                                 while ($row = mysqli_fetch_array($result)) {
                                                     echo '
-                            <tr>
-                              <td>' . $row['Kode_Toko'] . '</td>
-                              <td>' . $row['Nama_toko'] . '</td>
-                              <td>' . $row['Alamat'] . '</td>
-                              <td>' . $row['latitude'] . '</td>
-                              <td>' . $row['longtitude'] . '</td>
-                              <td>' . $row['distance'] . '</td>
-                              <td>' . $row['like_count'] . '</td>
-                              <td>' . $row['like_status'] . '</td>
-                              <td>' . $row['Produk_Terjual'] . '</td>
-                            </tr>
-                            ';
+                                                        <tr>
+                                                        <td>' . $row['Kode_Toko'] . '</td>
+                                                        <td>' . $row['Nama_toko'] . '</td>
+                                                        <td>' . $row['Alamat'] . '</td>
+                                                        <td>' . $row['latitude'] . '</td>
+                                                        <td>' . $row['longtitude'] . '</td>
+                                                        <td>' . $row['distance'] . '</td>
+                                                        <td>' . $row['like_count'] . '</td>
+                                                        <td>' . $row['like_status'] . '</td>
+                                                        <td>' . $row['Produk_Terjual'] . '</td>
+                                                        <td>' . $row['Password'] . '</td>
+                                                        </tr>
+                                                        ';
                                                 }
                                                 ?>
                                             </tbody>

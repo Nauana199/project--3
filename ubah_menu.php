@@ -27,7 +27,7 @@ function UpdateData()
   $kodeProduk = $_POST['kode_produk'];
   $namaProduk = $_POST['nama_produk'];
   $harga = $_POST['harga_produk'];
-  $kodeToko = $_POST['kode_toko'];
+  $kodeToko = $_SESSION['username'];
   $deskripsi = $_POST['deskripsi_produk'];
   $kategori_menu = $_POST['kategori_menu'];
 
@@ -379,11 +379,6 @@ function ifOptionSelected($data, $selectedData)
                     <h3 class="title">Atur Menu</h3>
                     <div class="input-container">
                       <input type="text" name="kode_produk" class="input" value="<?= $_GET['kode_menu'] ?>" hidden />
-                    </div>
-                    <div class="input-container">
-                      <input type="text" name="kode_toko" class="input" value="<?= $row['Kode_Toko'] ?>" />
-                      <label for="">Kode Toko</label>
-                      <span>Kode Toko</span>
                     </div>
                     <div class="input-container">
                       <input type="text" name="nama_produk" class="input" value="<?= $row['Nama_Menu'] ?>" />
