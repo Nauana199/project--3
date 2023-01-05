@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 
       if ($num != 0) {
         if ($userName == $username && $passVal == $pass) {
-          $_SESSION['username'] = $userName;
+          $_SESSION['admin_username'] = $userName;
           header('Location: index.php');
           echo $error;
         } else {
